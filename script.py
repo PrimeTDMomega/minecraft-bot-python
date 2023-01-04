@@ -9,11 +9,11 @@ import math
 
 
 def mine(block_name):
-    # Scan a 3x3x3 area centered on the player for the block
+    # Scan the rendered chunks for the block
     pos = mc.player.getTilePos()
-    for x in range(pos.x - 1, pos.x + 2):
-        for y in range(pos.y - 1, pos.y + 2):
-            for z in range(pos.z - 1, pos.z + 2):
+    for x in range(pos.x - 8, pos.x + 8):
+        for y in range(pos.y - 8, pos.y + 8):
+            for z in range(pos.z - 8, pos.z + 8):
                 # Get the block at the current coordinates
                 block_at_pos = mc.getBlock(x, y, z)
 
@@ -21,6 +21,12 @@ def mine(block_name):
                 if block_at_pos == block.Block[block_name]:
                     # Mine the block
                     mc.setBlock(x, y, z, block.AIR)
+                    # Wait for the block to drop
+                    time.sleep(0.5)
+                    # Pick up the block
+                    drops = mc.events.pollBlockHits()
+                    for drop in drops:
+                        mc.player.addItem(drop.block)
 
 # Connect to Minecraft
 mc = minecraft.Minecraft.create()
