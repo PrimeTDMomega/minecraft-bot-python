@@ -7,6 +7,21 @@ import mcpi.block as block
 import time
 import math
 
+
+def mine(block_name):
+    # Scan a 3x3x3 area centered on the player for the block
+    pos = mc.player.getTilePos()
+    for x in range(pos.x - 1, pos.x + 2):
+        for y in range(pos.y - 1, pos.y + 2):
+            for z in range(pos.z - 1, pos.z + 2):
+                # Get the block at the current coordinates
+                block_at_pos = mc.getBlock(x, y, z)
+
+                # Check if the block is the one we are looking for
+                if block_at_pos == block.Block[block_name]:
+                    # Mine the block
+                    mc.setBlock(x, y, z, block.AIR)
+
 # Connect to Minecraft
 mc = minecraft.Minecraft.create()
 
