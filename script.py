@@ -6,7 +6,17 @@ import mcpi.minecraft as minecraft
 import mcpi.block as block
 import time
 import math
+import minecraft_server_api  # Add this import statement
 
+def mine(schematic_data):
+    # Connect to the Minecraft server
+    mc = minecraft_server_api.MinecraftServer(SERVER_ADDRESS)
+
+    # Send the build command to the server
+    mc.schematic_build(schematic_data)
+
+    # Disconnect from the server
+    mc.disconnect()
 
 def mine(block_name):
     # Scan the rendered chunks for the block
